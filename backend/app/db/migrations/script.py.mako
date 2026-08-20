@@ -22,10 +22,3 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     ${downgrades if downgrades else "pass"}
-```
-
----
-
-Path: `hr-assistant-poc/backend/app/db/migrations/versions/.gitkeep`
-
-```

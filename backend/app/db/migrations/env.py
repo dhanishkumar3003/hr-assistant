@@ -5,6 +5,7 @@ from sqlalchemy import engine_from_config, pool
 
 from app.core.config import settings
 from app.db.base import Base
+from app.core.models import HrUser
 
 # Import every module's models here so autogenerate can see them.
 # Add a line per module as each teammate creates real tables.
