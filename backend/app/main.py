@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.modules.resume_ingestion.api import router as resume_ingestion_router
 from app.modules.hr_assistant.api import router as hr_assistant_router
@@ -9,6 +10,13 @@ from app.modules.dashboard.api import router as dashboard_router
 from app.modules.auth.api import router as auth_router
 
 app = FastAPI(title="HR Assistant POC")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(resume_ingestion_router, prefix="/resumes", tags=["Resume Ingestion"])
 app.include_router(hr_assistant_router, prefix="/chat", tags=["HR Assistant"])

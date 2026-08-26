@@ -76,5 +76,5 @@ class GroqAnswerEvaluator(IAnswerEvaluator):
 
 
 def get_answer_evaluator() -> IAnswerEvaluator:
-    import os
-    return GroqAnswerEvaluator(api_key=os.environ["GROQ_API_KEY"])
+    from app.core.config import settings
+    return GroqAnswerEvaluator(api_key=settings.llm_api_key)

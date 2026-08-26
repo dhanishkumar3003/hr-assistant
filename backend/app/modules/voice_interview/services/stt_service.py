@@ -34,7 +34,7 @@ class WhisperLocalProvider(ISTTProvider):
 
 
 def get_stt_provider() -> ISTTProvider:
-    provider = os.environ.get("STT_PROVIDER", "groq")
-    if provider == "groq":
-        return GroqSTTProvider(api_key=os.environ["GROQ_API_KEY"])
+    from app.core.config import settings
+    if settings.stt_provider == "groq":
+        return GroqSTTProvider(api_key=settings.stt_api_key)
     return WhisperLocalProvider(model_size="small")
