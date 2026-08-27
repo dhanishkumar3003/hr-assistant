@@ -21,6 +21,10 @@ dependencies = [
     "passlib[bcrypt]>=1.7.4",
     "pyjwt>=2.13.0",
     "bcrypt==4.0.1",
+    "groq>=1.7.0",
+    "faster-whisper>=1.2.1",
+    "kokoro-onnx>=0.6.1",
+    "soundfile>=0.14.0",
 ]
 
 [tool.uv]
