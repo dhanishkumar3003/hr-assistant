@@ -16,3 +16,15 @@ class IInterviewService(ABC):
     def get_results(self, interview_id: UUID) -> dict:
         """Returns transcript + per-question and overall scores."""
         ...
+
+    @abstractmethod
+    def get_status(self, candidate_id: UUID) -> str:
+        """Returns one of: not_started, started, in_progress, completed."""
+        ...
+
+    @abstractmethod
+    def list_statuses(self) -> list[dict]:
+        """Returns [{candidate_id, status, overall_score}, ...] for every
+        candidate — powers the dashboard table. Per-question detail stays
+        in get_results(), not here."""
+        ...

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import QuestionDisplay from "../../../components/interview/QuestionDisplay";
 import RecorderControls from "../../../components/interview/RecorderControls";
+import MicCheck from "../../../components/interview/MicCheck";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 const PLAY_DELAY_MS = 2000;
@@ -24,6 +25,7 @@ function withTimeout(ms) {
 export default function InterviewPage() {
   const params = useParams();
   const token = params.token;
+  const storageKey = `voice_interview_${token}`;
 
   const [candidateId, setCandidateId] = useState("");
   const [accessCode, setAccessCode] = useState("");
@@ -31,7 +33,7 @@ export default function InterviewPage() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [questionText, setQuestionText] = useState("");
-  const [status, setStatus] = useState("credentials");
+  const [status, setStatus] = useState("checking_resume");
   const [transcript, setTranscript] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -40,8 +42,45 @@ export default function InterviewPage() {
   useEffect(() => {
     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
       setStatus("unsupported");
+      return;
     }
+    tryResume();
   }, []);
+
+  async function tryResume() {
+    const saved = sessionStorage.getItem(storageKey);
+    if (!saved) {
+      setStatus("credentials");
+      return;
+    }
+
+    const { interviewId: savedId, totalQuestions: savedTotal } = JSON.parse(saved);
+    setInterviewId(savedId);
+    setTotalQuestions(savedTotal);
+
+    const { signal, clear } = withTimeout(NEXT_Q_TIMEOUT_MS);
+    try {
+      const res = await fetch(`${API_BASE_URL}/interview/${savedId}/next-question?from_index=-1`, { signal });
+      clear();
+      if (!res.ok) throw new Error("resume fetch failed");
+      const data = await res.json();
+
+      if (data.status === "completed") {
+        setStatus("completed");
+        sessionStorage.removeItem(storageKey);
+        return;
+      }
+
+      setQuestionIndex(data.question_index);
+      setQuestionText(data.question);
+      setStatus("ready_to_answer");
+    } catch (err) {
+      clear();
+      console.warn("Resume failed, starting fresh:", err);
+      sessionStorage.removeItem(storageKey);
+      setStatus("credentials");
+    }
+  }
 
   async function handleAuthenticate(e) {
     e.preventDefault();
@@ -74,13 +113,28 @@ export default function InterviewPage() {
       setQuestionIndex(data.question_index);
       setTotalQuestions(data.total_questions);
       setQuestionText(data.question);
-      schedulePlayback(data.interview_id, data.question_index);
+
+      sessionStorage.setItem(storageKey, JSON.stringify({
+        interviewId: data.interview_id,
+        totalQuestions: data.total_questions,
+      }));
+
+      if (data.question_index === 0) {
+        setStatus("mic_check");
+      } else {
+        schedulePlayback(data.interview_id, data.question_index);
+      }
+      
     } catch (err) {
       clear();
       const timedOut = err.name === "AbortError";
       setErrorMessage(timedOut ? "Request timed out. Please try again." : "Couldn't reach the server. Please try again.");
       setStatus("credentials");
     }
+  }
+
+  function handleMicCheckConfirmed() {
+    schedulePlayback(interviewId, questionIndex);
   }
 
   function schedulePlayback(id, index) {
@@ -206,6 +260,7 @@ export default function InterviewPage() {
 
       if (data.status === "completed") {
         setStatus("completed");
+        sessionStorage.removeItem(storageKey);
         return;
       }
 
@@ -225,6 +280,10 @@ export default function InterviewPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-background)]">
+      {status === "checking_resume" && (
+        <p className="text-[var(--color-text-secondary)] text-sm">Loading...</p>
+      )}
+
       {status === "unsupported" && (
         <div className="w-full max-w-xl bg-[var(--color-error-bg)] text-[var(--color-error-text)] rounded-[var(--radius-card)] px-6 py-5 text-sm text-center">
           <p>Your browser doesn't support audio recording. Please switch to a recent version of Chrome, Edge, or Firefox.</p>
@@ -271,6 +330,8 @@ export default function InterviewPage() {
         </form>
       )}
 
+      {status === "mic_check" && <MicCheck onConfirmed={handleMicCheckConfirmed} />}
+
       {status === "loading" && (
         <p className="text-[var(--color-text-secondary)] text-sm">Loading...</p>
       )}
@@ -290,9 +351,16 @@ export default function InterviewPage() {
             <span className="text-[#166534] text-2xl leading-none">✓</span>
           </div>
           <h1 className="text-xl font-semibold text-[var(--color-primary)] mb-1">Interview complete</h1>
-          <p className="text-[var(--color-text-secondary)] text-sm">
+          <p className="text-[var(--color-text-secondary)] text-sm mb-4">
             Thanks for your time. Your responses have been recorded.
           </p>
+          <div className="bg-[var(--color-background)] border border-[var(--color-border)] rounded-[var(--radius-input)] p-4 text-left">
+            <p className="text-xs font-medium text-[var(--color-text-secondary)] mb-1">What happens next</p>
+            <p className="text-sm text-[var(--color-primary)] leading-relaxed">
+              Our team will review your responses. If you're moving forward, we'll reach out by email
+              within the next few business days with details on the next step.
+            </p>
+          </div>
         </div>
       )}
 
