@@ -29,8 +29,6 @@ class LinkGenerator:
         access = self.access_repo.get_by_token(token)
         if not access:
             return None, "Invalid link or credentials"
-        if access.used:
-            return None, "This interview link has already been used"
         if access.expires_at < datetime.utcnow():
             return None, "This interview link has expired"
         if access.candidate_id != candidate_id or access.access_code != access_code:

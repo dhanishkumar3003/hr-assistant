@@ -9,7 +9,8 @@ from app.modules.voice_interview.services.link_generator import LinkGenerator
 class VoiceInterviewService(IInterviewService):
     def __init__(self, db: Session):
         self.interview_repo = InterviewRepository(db)
-        self.link_generator = LinkGenerator(AccessRepository(db))
+        self.access_repo = AccessRepository(db)
+        self.link_generator = LinkGenerator(self.access_repo)
 
     def create_link(self, candidate_id: UUID) -> str:
         return self.link_generator.create_link(candidate_id)
@@ -43,3 +44,36 @@ class VoiceInterviewService(IInterviewService):
                 for a in answers
             ],
         }
+
+    def _compute_status(self, access, session) -> str:
+        if not access.used or session is None:
+            return "not_started"
+        if session.status == "completed":
+            return "completed"
+        if session.current_question_index == 0:
+            return "started"
+        return "in_progress"
+
+    def get_status(self, candidate_id: UUID) -> str:
+        access = self.access_repo.get_by_candidate_id(candidate_id)
+        if not access:
+            return "not_started"
+        session = (
+            self.interview_repo.get_session(access.interview_session_id)
+            if access.interview_session_id else None
+        )
+        return self._compute_status(access, session)
+
+    def list_statuses(self) -> list[dict]:
+        results = []
+        for access in self.access_repo.get_all():
+            session = (
+                self.interview_repo.get_session(access.interview_session_id)
+                if access.interview_session_id else None
+            )
+            results.append({
+                "candidate_id": str(access.candidate_id),
+                "status": self._compute_status(access, session),
+                "overall_score": session.overall_score if session else None,
+            })
+        return results

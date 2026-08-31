@@ -21,6 +21,12 @@ class AccessRepository:
     def get_by_token(self, token: str) -> CandidateAccess | None:
         return self.db.query(CandidateAccess).filter(CandidateAccess.token == token).first()
 
+    def get_by_candidate_id(self, candidate_id: UUID) -> CandidateAccess | None:
+        return self.db.query(CandidateAccess).filter(CandidateAccess.candidate_id == candidate_id).first()
+
+    def get_all(self) -> list[CandidateAccess]:
+        return self.db.query(CandidateAccess).all()
+
     def mark_used(self, access: CandidateAccess, interview_session_id: UUID):
         access.used = True
         access.interview_session_id = interview_session_id

@@ -19,7 +19,9 @@ uv.lock
 .coverage.*
 htmlcov/
 uv.lock
-
+audio_files
+kokoro-v1.0.int8.onnx
+voices-v1.0.bin
 # ---------- Environment / Secrets ----------
 .env
 .env.*

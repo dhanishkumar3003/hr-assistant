@@ -46,6 +46,25 @@ def authenticate(payload: AuthenticateRequest, db: Session = Depends(get_db)):
         raise HTTPException(401, error)
 
     interview_repo = InterviewRepository(db)
+
+    if access.used:
+        # Already authenticated before — could be a refresh, a second tab, or
+        # re-clicking the email link. Resume the existing session instead of
+        # rejecting, UNLESS it's already finished.
+        session = interview_repo.get_session(access.interview_session_id)
+        if not session:
+            raise HTTPException(500, "Session data is missing for this link")
+        if session.status == "completed":
+            raise HTTPException(401, "This interview has already been completed")
+
+        question = question_gen.get_question(session.current_question_index)
+        return {
+            "interview_id": session.id,
+            "question_index": session.current_question_index,
+            "question": question,
+            "total_questions": question_gen.get_total(),
+        }
+
     session = interview_repo.create_session(access.candidate_id)
     AccessRepository(db).mark_used(access, session.id)
 
@@ -147,3 +166,7 @@ def get_full_interview(interview_id: UUID, db: Session = Depends(get_db)):
     if result is None:
         raise HTTPException(404, "Interview not found")
     return result
+
+@router.get("/status")
+def list_statuses(db: Session = Depends(get_db)):
+    return VoiceInterviewService(db).list_statuses()
