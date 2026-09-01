@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   postgres:
     image: pgvector/pgvector:pg16
@@ -39,14 +37,23 @@ services:
       - ../.env
     environment:
       DATABASE_URL: postgresql://hr_user:hr_pass@postgres:5432/hr_assistant_poc
+      OLLAMA_BASE_URL: http://ollama:11434
+      # Gmail Pub/Sub backend's own Pub/Sub client (separate from the
+      # Gmail API OAuth token in email_outreach/token.json) needs its
+      # own auth - points at the gcloud ADC file mounted below, written
+      # by `gcloud auth application-default login` on the host.
+      GOOGLE_APPLICATION_CREDENTIALS: /gcloud/application_default_credentials.json
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     volumes:
       - ../backend/app:/app/app
+      - ${APPDATA}/gcloud/application_default_credentials.json:/gcloud/application_default_credentials.json:ro
     depends_on:
       postgres:
         condition: service_healthy
-    command: uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      ollama:
+        condition: service_started
+    command: ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   frontend:
     build:

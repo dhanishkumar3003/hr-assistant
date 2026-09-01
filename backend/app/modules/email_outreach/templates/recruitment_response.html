@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{email_title}}</title>
+
+    <!-- Shared stylesheet -->
+    <link rel="stylesheet" href="recruitment_response.css">
+</head>
+
+<body>
+
+<div class="email-container">
+
+    <div class="email-card">
+
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
+
+        <div class="header">
+
+            <h1>
+                {{company_name}}
+            </h1>
+
+            <p>
+                {{header_subtitle}}
+            </p>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- CONTENT -->
+        <!-- ========================= -->
+
+        <div class="content">
+
+            <!-- Greeting -->
+
+            <p class="greeting">
+                Hi <strong>{{candidate_name}}</strong>,
+            </p>
+
+
+            <!-- Main Message -->
+
+            <p>
+                {{message_1}}
+            </p>
+
+            <p>
+                {{message_2}}
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- NEXT STEP / RESPONSE BOX -->
+            <!-- ========================= -->
+
+            {{response_section}}
+
+
+            <!-- ========================= -->
+            <!-- CLOSING MESSAGE -->
+            <!-- ========================= -->
+
+            <p>
+                {{closing_message}}
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- HR CONTACT -->
+            <!-- ========================= -->
+
+            <div class="divider">
+
+                <p>
+                    If you have any questions, please contact our HR team at
+                    <a href="mailto:{{hr_email}}">
+                        {{hr_email}}
+                    </a>.
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- SIGNATURE -->
+            <!-- ========================= -->
+
+            <p class="signature">
+
+                Best regards,<br>
+
+                <strong>{{hr_name}}</strong><br>
+
+                {{hr_designation}}<br>
+
+                {{company_name}}
+
+            </p>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- FOOTER -->
+        <!-- ========================= -->
+
+        <div class="footer">
+
+            <p>
+                © {{year}} {{company_name}}. All rights reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

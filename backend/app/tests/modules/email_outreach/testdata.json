@@ -1,0 +1,202 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "CAND-001",
+      "name": "Rahul Kumar",
+      "email": "rahul.kumar@example.com",
+      "phone": "+91-9876543210",
+      "location": "Chennai, Tamil Nadu, India",
+      "experience": "4 years",
+      "skills": [
+        "Python",
+        "FastAPI",
+        "Django",
+        "PostgreSQL",
+        "REST APIs",
+        "Docker",
+        "Git",
+        "AWS"
+      ],
+      "current_designation": "Python Developer",
+      "current_company": "Tech Solutions Pvt Ltd",
+      "education": "B.Tech in Computer Science and Engineering",
+      "job_id": "JOB-001",
+      "hr_id": "HR-001"
+    },
+    {
+      "candidate_id": "CAND-002",
+      "name": "Ananya Verma",
+      "email": "ananya.verma@example.com",
+      "phone": "+91-9876500000",
+      "location": "Bengaluru, Karnataka, India",
+      "experience": "2 years",
+      "skills": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "CSS",
+        "Git"
+      ],
+      "current_designation": "Frontend Developer",
+      "current_company": "Webify Labs",
+      "education": "B.E. in Information Technology",
+      "job_id": "JOB-002",
+      "hr_id": "HR-002"
+    },
+    {
+      "candidate_id": "CAND-003",
+      "name": "Test Candidate Three",
+      "email": "test.candidate3@example.com",
+      "phone": "+91-9000000003",
+      "location": "Chennai, Tamil Nadu, India",
+      "experience": "3 years",
+      "skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL"
+      ],
+      "current_designation": "Backend Developer",
+      "current_company": "Test Co",
+      "education": "B.Tech in Computer Science",
+      "job_id": "JOB-001",
+      "hr_id": "HR-001"
+    },
+    {
+      "candidate_id": "CAND-004",
+      "name": "Test Candidate Four",
+      "email": "test.candidate4@example.com",
+      "phone": "+91-9000000004",
+      "location": "Bengaluru, Karnataka, India",
+      "experience": "2 years",
+      "skills": [
+        "React",
+        "TypeScript"
+      ],
+      "current_designation": "Frontend Developer",
+      "current_company": "Test Co",
+      "education": "B.E. in Information Technology",
+      "job_id": "JOB-002",
+      "hr_id": "HR-002"
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "JOB-001",
+      "job_role": "Senior Python Developer",
+      "job_description": "We are looking for a Senior Python Developer to design, develop, test, and maintain scalable backend applications. The candidate will work closely with engineering and product teams to build reliable APIs, backend services, and data-driven applications.",
+      "experience_required": "3-5 years of professional experience in Python backend development.",
+      "required_skills": [
+        "Python",
+        "FastAPI",
+        "REST APIs",
+        "PostgreSQL",
+        "Docker",
+        "Git"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Django",
+        "Redis",
+        "Celery",
+        "Microservices"
+      ],
+      "employment_type": "Full-time",
+      "work_location": "Chennai / Hybrid",
+      "response_deadline": "2026-09-15"
+    },
+    {
+      "job_id": "JOB-002",
+      "job_role": "Frontend Developer",
+      "job_description": "We are looking for a Frontend Developer to build responsive, accessible interfaces using React and TypeScript, working closely with design and backend teams.",
+      "experience_required": "1-3 years of professional experience in frontend development.",
+      "required_skills": [
+        "React",
+        "TypeScript",
+        "CSS",
+        "Git"
+      ],
+      "preferred_skills": [
+        "Next.js",
+        "Tailwind CSS",
+        "Testing Library"
+      ],
+      "employment_type": "Full-time",
+      "work_location": "Bengaluru / Hybrid",
+      "response_deadline": "2026-09-15"
+    },
+    {
+      "job_id": "JOB-003",
+      "job_role": "AI Developer",
+      "job_description": "We are looking for an AI Developer to build and integrate LLM-powered features, working closely with backend and product teams.",
+      "experience_required": "1-3 years of professional experience with Python and LLM tooling.",
+      "required_skills": [
+        "Python",
+        "Langchain",
+        "FastAPI",
+        "Git"
+      ],
+      "preferred_skills": [
+        "Next.js",
+        "Tailwind CSS",
+        "Testing Library"
+      ],
+      "employment_type": "Full-time",
+      "work_location": "Chennai / Hybrid",
+      "response_deadline": "2026-09-15"
+    }
+  ],
+  "hrs": [
+    {
+      "hr_id": "HR-001",
+      "name": "Priya Sharma",
+      "designation": "HR Manager",
+      "email": "priya.sharma@example.com"
+    },
+    {
+      "hr_id": "HR-002",
+      "name": "Karthik Raj",
+      "designation": "Senior Recruiter",
+      "email": "karthik.raj@example.com"
+    }
+  ],
+  "rounds": [
+    {
+      "round_id": "ROUND-1",
+      "round_number": null,
+      "round_type": "invitation",
+      "round_name": "Interview Invitation"
+    },
+    {
+      "round_id": "ROUND-2-BACKEND",
+      "round_number": 1,
+      "round_type": "assessment",
+      "round_name": "Technical Assessment - Backend",
+      "round_description": "A short email-based assessment covering Python fundamentals, API design, and database querying, tailored to the backend role you applied for.",
+      "round_duration": "45 minutes",
+      "round_deadline": "2026-09-10",
+      "number_of_questions": "10"
+    },
+    {
+      "round_id": "ROUND-2-FRONTEND",
+      "round_number": 1,
+      "round_type": "assessment",
+      "round_name": "Technical Assessment - Frontend",
+      "round_description": "A short email-based assessment covering React fundamentals, component design, and TypeScript, tailored to the frontend role you applied for.",
+      "round_duration": "30 minutes",
+      "round_deadline": "2026-09-10",
+      "number_of_questions": "8"
+    },
+    {
+      "round_id": "ROUND-3",
+      "round_number": 2,
+      "round_type": "next_round",
+      "round_name": "Next Round Invitation"
+    },
+    {
+      "round_id": "ROUND-REJECTED",
+      "round_number": null,
+      "round_type": "rejection",
+      "round_name": "Application Update - Not Selected"
+    }
+  ]
+}

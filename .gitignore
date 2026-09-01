@@ -29,6 +29,10 @@ voices-v1.0.bin
 *.pem
 *.key
 
+# Gmail OAuth (email_outreach module - gmail_api/gmail_pubsub backends)
+backend/app/modules/email_outreach/credentials.json
+backend/app/modules/email_outreach/token.json
+
 # ---------- Node / Frontend ----------
 node_modules/
 .next/
@@ -39,6 +43,13 @@ dist/
 *.tsbuildinfo
 next-env.d.ts
 .vercel/
+
+# ---------- Playwright (backend/app/tests/modules/email_outreach/e2e) ----------
+test-results/
+playwright-report/
+.mock-postal-port
+.mock-postal-pid
+.env.e2e-backup
 
 # ---------- Database ----------
 *.sqlite3
@@ -64,6 +75,15 @@ Thumbs.db
 *.wav
 *.m4a
 
+# ---------- Downloaded model files (fetched at Docker build time) ----------
+backend/kokoro-v1.0.int8.onnx
+backend/voices-v1.0.bin
+*.onnx
+
 # ---------- Misc ----------
 *.bak
 *.tmp
+
+# ---------- Local tooling / scratch artifacts ----------
+graphify-out/
+testingprompt.md

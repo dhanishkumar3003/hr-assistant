@@ -1,0 +1,363 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   EMAIL WRAPPER
+========================================================= */
+
+.email-wrapper {
+    width: 100%;
+    background-color: #f4f6f8;
+    padding: 40px 15px;
+}
+
+.email-wrapper-cell {
+    text-align: center;
+}
+
+
+/* =========================================================
+   EMAIL CARD
+========================================================= */
+
+.email-card {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.email-header {
+    background-color: #111827;
+    padding: 30px 35px;
+    text-align: center;
+}
+
+.company-name {
+    margin: 0;
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+.header-subtitle {
+    margin: 8px 0 0;
+    color: #d1d5db;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.email-content {
+    padding: 40px 35px;
+}
+
+.greeting {
+    margin: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.paragraph {
+    margin: 0 0 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   JOB INFORMATION CARD
+========================================================= */
+
+.job-card {
+    width: 100%;
+    margin: 25px 0;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.job-card-content {
+    padding: 24px;
+}
+
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.section-label {
+    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #6b7280;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+
+
+/* =========================================================
+   JOB TITLE
+========================================================= */
+
+.job-title {
+    margin: 0 0 25px;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: #111827;
+}
+
+
+/* =========================================================
+   JOB DESCRIPTION
+========================================================= */
+
+.job-description {
+    margin: 0 0 25px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   JOB DETAILS
+========================================================= */
+
+.job-detail {
+    margin: 0 0 25px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #4b5563;
+}
+
+.last-detail {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   RESPONSE CARD
+========================================================= */
+
+.response-card {
+    width: 100%;
+    margin: 30px 0 0;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.response-card-content {
+    padding: 24px;
+}
+
+
+/* =========================================================
+   RESPONSE TITLE
+========================================================= */
+
+.response-title {
+    margin: 0 0 14px;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #111827;
+}
+
+
+/* =========================================================
+   RESPONSE TEXT
+========================================================= */
+
+.response-text {
+    margin: 0 0 15px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   RESPONSE EXAMPLES
+========================================================= */
+
+.response-examples {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.example-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.example {
+    margin: 0 0 10px;
+    padding: 10px 12px;
+    background-color: #ffffff;
+    border-left: 3px solid #2563eb;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #6b7280;
+}
+
+.example:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   DEADLINE
+========================================================= */
+
+.deadline-section {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 30px;
+    padding-top: 25px;
+}
+
+.deadline-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.note-text {
+    margin: 20px 0 0;
+    padding: 14px 16px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-text {
+    margin: 30px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6b7280;
+}
+
+.email-link {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   SIGNATURE
+========================================================= */
+
+.signature {
+    margin: 30px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.email-footer {
+    background-color: #f9fafb;
+    padding: 22px 35px;
+    text-align: center;
+}
+
+.footer-text {
+    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #9ca3af;
+}
+
+.footer-text:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media only screen and (max-width: 600px) {
+
+    .email-wrapper {
+        padding: 20px 10px;
+    }
+
+    .email-header {
+        padding: 25px 22px;
+    }
+
+    .email-content {
+        padding: 30px 22px;
+    }
+
+    .email-footer {
+        padding: 20px 22px;
+    }
+
+    .company-name {
+        font-size: 21px;
+    }
+
+    .job-card-content {
+        padding: 20px;
+    }
+
+    .response-card-content {
+        padding: 20px;
+    }
+
+    .job-title {
+        font-size: 18px;
+    }
+
+    .response-title {
+        font-size: 17px;
+    }
+
+}

@@ -1,5 +1,6 @@
 from logging.config import fileConfig
 from app.modules.voice_interview import models # noqa
+from app.modules.email_outreach import models as email_outreach_models # noqa
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool

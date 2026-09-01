@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Update</title>
+    <!-- Development: <link rel="stylesheet" href="candidate_rejection.css"> For production email delivery: Inline the CSS before sending the email. -->
+    <link rel="stylesheet" href="candidate_rejection.css">
+</head>
+
+<body>
+    <!-- ===================================================== EMAIL WRAPPER ====================================================== -->
+    <table class="email-wrapper" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+            <td class="email-wrapper-cell">
+                <!-- ================================================= EMAIL CARD ================================================== -->
+                <table class="email-card" cellpadding="0" cellspacing="0" border="0">
+                    <!-- ================================================= HEADER ================================================== -->
+                    <tr>
+                        <td class="email-header">
+                            <h1 class="company-name"> {{company_name}} </h1>
+                            <p class="header-subtitle"> Application Update </p>
+                        </td>
+                    </tr>
+                    <!-- ================================================= MAIN CONTENT ================================================== -->
+                    <tr>
+                        <td class="email-content"> <!-- Greeting -->
+                            <p class="greeting"> Hi <strong>{{candidate_name}}</strong>, </p> <!-- Thank You -->
+                            <p class="paragraph"> Thank you for taking the time to apply for the
+                                <strong>{{job_role}}</strong> position at <strong>{{company_name}}</strong>. </p>
+                            <!-- Decision -->
+                            <p class="paragraph"> {{decision_paragraph}} </p>
+                            <!-- ================================================= POSITION CARD ================================================== -->
+                            <table class="job-card" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="job-card-content">
+                                        <p class="section-label"> POSITION </p>
+                                        <p class="job-title"> {{job_role}} </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- ================================================= APPRECIATION ================================================== -->
+                            <p class="paragraph"> We received applications from many qualified candidates, and the
+                                selection process involved considering a range of factors relevant to the role. While we
+                                will not be proceeding with your application for this particular opportunity, we
+                                appreciate your interest in <strong>{{company_name}}</strong>. </p>
+                            <!-- ================================================= FUTURE OPPORTUNITIES ================================================== -->
+                            <table class="future-card" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="future-card-content">
+                                        <h2 class="future-title"> Future Opportunities </h2>
+                                        <p class="future-text"> We encourage you to keep an eye on our future openings,
+                                            as another position may be a better match for your experience and skills.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- ================================================= THANK YOU ================================================== -->
+                            <p class="paragraph thank-you"> Thank you again for considering
+                                <strong>{{company_name}}</strong> as part of your career journey. We wish you every
+                                success in your job search and future career. </p>
+                            <!-- ================================================= CONTACT ================================================== -->
+                            <p class="contact-text"> If you have any questions regarding this application update, you
+                                may reply directly to this email or contact our HR team at <a href="mailto:{{hr_email}}"
+                                    class="email-link"> {{hr_email}} </a>. </p>
+                            <!-- ================================================= SIGNATURE ================================================== -->
+                            <p class="signature"> Best regards,<br> <strong>{{hr_name}}</strong><br>
+                                {{hr_designation}}<br> {{company_name}} </p>
+                        </td>
+                    </tr>
+                    <!-- ================================================= FOOTER ================================================== -->
+                    <tr>
+                        <td class="email-footer">
+                            <p class="footer-text"> © {{year}} {{company_name}}. All rights reserved. </p>
+                            <p class="footer-text"> This email was sent as part of our recruitment process. </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

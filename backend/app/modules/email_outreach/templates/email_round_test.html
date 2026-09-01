@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Round Assessment</title>
+    <!-- Development: <link rel="stylesheet" href="email_round_test.css"> Production: Inline the CSS before sending the email. -->
+    <link rel="stylesheet" href="email_round_test.css">
+</head>
+
+<body>
+    <!-- ===================================================== EMAIL WRAPPER ====================================================== -->
+    <table class="email-wrapper" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+            <td class="email-wrapper-cell">
+                <!-- ================================================= EMAIL CARD ================================================== -->
+                <table class="email-card" cellpadding="0" cellspacing="0" border="0">
+                    <!-- ================================================= HEADER ================================================== -->
+                    <tr>
+                        <td class="email-header">
+                            <h1 class="company-name"> {{company_name}} </h1>
+                            <p class="header-subtitle"> Candidate Assessment </p>
+                        </td>
+                    </tr>
+                    <!-- ================================================= MAIN CONTENT ================================================== -->
+                    <tr>
+                        <td class="email-content"> <!-- Greeting -->
+                            <p class="greeting"> Hi <strong>{{candidate_name}}</strong>, </p> <!-- Introduction -->
+                            <p class="paragraph"> Thank you for confirming your interest in the
+                                <strong>{{job_role}}</strong> opportunity at <strong>{{company_name}}</strong>. </p>
+                            <p class="paragraph"> As the next step in our recruitment process, we would like you to
+                                complete a short <strong>email-based assessment</strong>. This assessment will help us
+                                understand your communication, problem-solving, and role-specific skills. </p>
+                            <p class="paragraph"> {{round_description}} </p>
+                            <!-- ================================================= ASSESSMENT DETAILS ================================================== -->
+                            <table class="assessment-card" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="assessment-card-content"> <!-- Assessment -->
+                                        <p class="section-label"> ASSESSMENT </p>
+                                        <p class="assessment-title"> {{assessment_name}} </p> <!-- Duration -->
+                                        <p class="section-label"> EXPECTED DURATION </p>
+                                        <p class="assessment-detail"> {{assessment_duration}} </p> <!-- Deadline -->
+                                        <p class="section-label"> COMPLETION DEADLINE </p>
+                                        <p class="assessment-detail"> {{assessment_deadline}} </p> <!-- Questions -->
+                                        <p class="section-label"> QUESTIONS </p>
+                                        <p class="assessment-detail last-detail"> {{number_of_questions}} </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- ================================================= INSTRUCTIONS ================================================== -->
+                            <h2 class="section-title"> Before you begin </h2>
+                            <ul class="instruction-list">
+                                <li> Make sure you have a stable internet connection. </li>
+                                <li> Choose a quiet environment where you can complete the assessment without
+                                    interruptions. </li>
+                                <li> Read each question carefully before submitting your response. </li>
+                                <li> Complete the assessment before the specified deadline. </li>
+                                <li> Once submitted, your responses will be reviewed as part of the recruitment process.
+                                </li>
+                            </ul>
+                            <!-- ================================================= TEST LINK ================================================== -->
+                            <table class="button-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="button-cell"> <a href="{{test_link}}" class="test-button"> Start
+                                            Assessment </a> </td>
+                                </tr>
+                            </table>
+                            <!-- ================================================= DIRECT LINK ================================================== -->
+                            <table class="link-card" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="link-card-content">
+                                        <p class="link-title"> Assessment Link </p>
+                                        <p class="link-text"> If the button above does not work, copy and paste the
+                                            following link into your browser: </p>
+                                        <p class="test-url"> {{test_link}} </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- ================================================= DEADLINE WARNING ================================================== -->
+                            <table class="deadline-card" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="deadline-card-content">
+                                        <p class="deadline-title"> Please complete the assessment by </p>
+                                        <p class="deadline-date"> {{assessment_deadline}} </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- ================================================= SUPPORT ================================================== -->
+                            <p class="contact-text"> If you experience any technical difficulties while accessing the
+                                assessment or have any questions, please contact our HR team at <a
+                                    href="mailto:{{hr_email}}" class="email-link"> {{hr_email}} </a>. </p>
+                            <!-- ================================================= SIGNATURE ================================================== -->
+                            <p class="signature"> Best regards,<br> <strong>{{hr_name}}</strong><br>
+                                {{hr_designation}}<br> {{company_name}} </p>
+                        </td>
+                    </tr>
+                    <!-- ================================================= FOOTER ================================================== -->
+                    <tr>
+                        <td class="email-footer">
+                            <p class="footer-text"> © {{year}} {{company_name}}. All rights reserved. </p>
+                            <p class="footer-text"> This email was sent as part of our recruitment process. </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

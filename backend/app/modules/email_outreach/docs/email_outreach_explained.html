@@ -1,0 +1,1168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Outreach, Explained</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --paper: #faf9f6;
+    --paper-raised: #ffffff;
+    --ink: #1c1d1f;
+    --ink-soft: #45464a;
+    --caption: #8a8578;
+    --hairline: #e6e1d6;
+    --accent: #4f7386;
+    --accent-strong: #395866;
+    --accent-wash: #eaf0f2;
+    --ok: #2d6a5c;
+    --ok-wash: #e6f1ee;
+    --warn: #a3672f;
+    --warn-wash: #f6ede1;
+    --code-bg: #22242a;
+    --code-ink: #e7e6e1;
+    --code-accent: #8fc7d6;
+    --shadow: 0 1px 2px rgba(28,29,31,0.04), 0 8px 24px rgba(28,29,31,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #17181a;
+      --paper-raised: #1e2023;
+      --ink: #eeece6;
+      --ink-soft: #c7c4bb;
+      --caption: #918d81;
+      --hairline: #302f2c;
+      --accent: #8fc0d4;
+      --accent-strong: #b7dbe6;
+      --accent-wash: #1c2c31;
+      --ok: #7fc4ae;
+      --ok-wash: #17332c;
+      --warn: #dba36c;
+      --warn-wash: #332a1c;
+      --code-bg: #0f1013;
+      --code-ink: #e7e6e1;
+      --code-accent: #8fc7d6;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #17181a;
+    --paper-raised: #1e2023;
+    --ink: #eeece6;
+    --ink-soft: #c7c4bb;
+    --caption: #918d81;
+    --hairline: #302f2c;
+    --accent: #8fc0d4;
+    --accent-strong: #b7dbe6;
+    --accent-wash: #1c2c31;
+    --ok: #7fc4ae;
+    --ok-wash: #17332c;
+    --warn: #dba36c;
+    --warn-wash: #332a1c;
+    --code-bg: #0f1013;
+    --code-ink: #e7e6e1;
+    --code-accent: #8fc7d6;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    line-height: 1.65;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-strong); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  code, .mono {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  /* ---------- shell ---------- */
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px) 120px;
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    padding: clamp(48px, 8vw, 88px) 0 44px;
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+    line-height: 1.08;
+    margin: 0;
+    max-width: 16ch;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .dek {
+    font-size: 1.13rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: var(--paper-raised);
+    border: 1px solid var(--hairline);
+    color: var(--ink-soft);
+  }
+
+  /* ---------- layout: rail + content ---------- */
+
+  .layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 64px);
+    padding-top: 40px;
+    align-items: start;
+  }
+
+  .rail {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+  }
+
+  .rail-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--caption);
+    margin-bottom: 10px;
+  }
+
+  .rail a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 7px 10px 7px 14px;
+    border-left: 2px solid var(--hairline);
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .rail a:hover {
+    color: var(--ink);
+    border-left-color: var(--accent);
+    background: var(--accent-wash);
+  }
+
+  .content { min-width: 0; }
+
+  section.step {
+    padding-bottom: 56px;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--hairline);
+    scroll-margin-top: 24px;
+  }
+
+  section.step:last-of-type {
+    border-bottom: none;
+  }
+
+  .step-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--caption);
+    background: var(--paper-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 2px 10px;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+    margin: 28px 0 10px;
+    color: var(--ink);
+  }
+
+  .step-sub {
+    color: var(--caption);
+    font-size: 14.5px;
+    margin: 0 0 22px;
+    max-width: 66ch;
+  }
+
+  p {
+    max-width: 68ch;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  p.lede {
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  ul, ol {
+    max-width: 66ch;
+    padding-left: 1.3em;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+
+  li { margin-bottom: 6px; }
+
+  strong { color: var(--ink); font-weight: 600; }
+
+  .path {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88em;
+    background: var(--accent-wash);
+    color: var(--accent-strong);
+    padding: 1px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* ---------- code blocks ---------- */
+
+  .code-wrap {
+    margin: 18px 0 22px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--hairline);
+  }
+
+  .code-label {
+    background: var(--code-bg);
+    color: var(--caption);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 9px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    letter-spacing: 0.03em;
+  }
+
+  pre {
+    margin: 0;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 16px;
+    overflow-x: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  pre .c1 { color: var(--code-accent); }
+  pre .c2 { color: #d6b98c; }
+
+  /* ---------- flow diagram ---------- */
+
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    margin: 22px 0 26px;
+    padding: 18px;
+    background: var(--paper-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+  }
+
+  .flow-node {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    background: var(--accent-wash);
+    color: var(--accent-strong);
+    padding: 7px 12px;
+    border-radius: 7px;
+    white-space: nowrap;
+  }
+
+  .flow-node.state {
+    background: var(--ok-wash);
+    color: var(--ok);
+  }
+
+  .flow-arrow {
+    color: var(--caption);
+    padding: 0 8px;
+    font-size: 15px;
+  }
+
+  /* ---------- table ---------- */
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 18px 0 24px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 560px;
+    font-size: 14.5px;
+    background: var(--paper-raised);
+  }
+
+  th {
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--caption);
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--paper);
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--hairline);
+    color: var(--ink-soft);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  td code, td .path { white-space: nowrap; }
+
+  .method {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+  .method.get { background: var(--accent-wash); color: var(--accent-strong); }
+  .method.post { background: var(--ok-wash); color: var(--ok); }
+
+  /* ---------- callouts ---------- */
+
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 14.5px;
+    max-width: 66ch;
+  }
+
+  .callout.note { background: var(--accent-wash); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+  .callout.warn { background: var(--warn-wash); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent); }
+
+  .callout .glyph {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .callout.note .glyph { color: var(--accent-strong); }
+  .callout.warn .glyph { color: var(--warn); }
+
+  .callout p { margin: 0; color: var(--ink-soft); max-width: none; }
+
+  /* ---------- status pill list ---------- */
+
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 18px 0 24px;
+    max-width: 66ch;
+  }
+
+  .status-card {
+    border: 1px solid var(--hairline);
+    background: var(--paper-raised);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .status-card .pill {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    margin-bottom: 7px;
+  }
+
+  .pill.draft { background: var(--hairline); color: var(--ink-soft); }
+  .pill.approved { background: var(--accent-wash); color: var(--accent-strong); }
+  .pill.sent { background: var(--ok-wash); color: var(--ok); }
+  .pill.rejected, .pill.inactive { background: var(--warn-wash); color: var(--warn); }
+
+  .status-card p { font-size: 13px; margin: 0; max-width: none; }
+
+  /* ---------- file tree ---------- */
+
+  .tree {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--paper-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 16px 18px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin: 18px 0 24px;
+    overflow-x: auto;
+  }
+
+  .tree .dir { color: var(--accent-strong); }
+  .tree .comment { color: var(--caption); }
+
+  /* ---------- footer ---------- */
+
+  .doc-footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--hairline);
+    color: var(--caption);
+    font-size: 13.5px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; }
+    .rail {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 8px;
+    }
+    .rail-title { display: none; }
+    .rail a {
+      border-left: none;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    .rail a:hover { background: var(--accent-wash); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header class="hero">
+    <div class="eyebrow">email_outreach module — walkthrough</div>
+    <h1>How the outreach emails actually get sent</h1>
+    <p class="dek">
+      A plain-language tour of every file in <span class="path">backend/app/modules/email_outreach/</span> —
+      what each one is responsible for, and the exact path a request takes from
+      "HR clicks approve" to "candidate gets an email" to "candidate's reply gets read."
+    </p>
+    <div class="hero-meta">
+      <span class="chip">FastAPI + SQLAlchemy</span>
+      <span class="chip">PostgreSQL</span>
+      <span class="chip">Ollama LLM</span>
+      <span class="chip">Postal / Gmail Pub/Sub</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="rail" aria-label="Sections">
+      <div class="rail-title">Contents</div>
+      <a href="#big-picture">The big picture</a>
+      <a href="#rounds">Rounds, not "purpose"</a>
+      <a href="#files">What each file does</a>
+      <a href="#draft">1 · Drafting an email</a>
+      <a href="#approve">2 · HR approves it</a>
+      <a href="#send">3 · Sending it</a>
+      <a href="#reply">4 · Reading a reply</a>
+      <a href="#threshold">5 · Auto-marking inactive</a>
+      <a href="#status">6 · Checking status</a>
+      <a href="#api-table">API reference</a>
+      <a href="#glossary">Glossary</a>
+    </nav>
+
+    <main class="content">
+
+      <section id="big-picture" class="step">
+        <div class="step-head">
+          <h2>The big picture</h2>
+        </div>
+        <p class="step-sub">Read this part first — everything else is a zoom-in on one piece of it.</p>
+
+        <p class="lede">
+          This module's whole job is: get an email in front of a candidate, but never
+          without a human saying "yes, send it" first — then figure out what the
+          candidate said back.
+        </p>
+
+        <p>
+          Every email this module sends goes through the same four-stage life cycle.
+          Nothing skips a stage. A row in the database tracks exactly which stage
+          each candidate's email is in right now:
+        </p>
+
+        <div class="flow">
+          <span class="flow-node state">Draft</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node state">Approved</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node state">Sent</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node state">Inactive</span>
+          <span class="flow-arrow" style="margin-left:4px;">(if nobody replies in time)</span>
+        </div>
+
+        <p>
+          A <strong>draft</strong> is text sitting in the database that hasn't gone
+          anywhere yet — HR can still read it and change it. Once HR
+          <strong>approves</strong> it, it's locked in as "ready to go" but still
+          hasn't been emailed. The actual send is a separate step: only then does it
+          become <strong>sent</strong>, with a real tracking token attached so a
+          reply can be matched back to it later. If the candidate never replies
+          within the configured time window, a cleanup job flips it to
+          <strong>inactive</strong> automatically — nobody has to remember to do
+          that by hand.
+        </p>
+
+        <p>
+          Separately from all of that, there's a second flow: reading what candidates
+          write back. A background listener starts automatically the moment the
+          backend server boots — no separate process to run — and Gmail pushes a
+          notification the instant a reply lands, instead of the module having to
+          go check. A webhook door exists too, for providers that push replies
+          directly. Either way, the reply text gets fed to a classifier that decides:
+          interested, declined, or needs a human to look at it.
+        </p>
+      </section>
+
+      <section id="rounds" class="step">
+        <div class="step-head">
+          <h2>Rounds, not "purpose"</h2>
+        </div>
+        <p class="step-sub">The other big idea this module is built around, alongside the four-stage life cycle above.</p>
+
+        <p class="lede">
+          Every email this module can send — the initial interview invite, a
+          technical assessment, a next-round invite, a rejection — is just an
+          entry in one shared <strong>rounds catalog</strong>. The invitation
+          itself isn't numbered — it's an acceptance gate, not an interview
+          round — so numbering starts once a candidate is actually being
+          interviewed: round 1 is a technical assessment, round 2 is a
+          next-round invite. Rejection is also unnumbered, a terminal outcome
+          rather than a step in the sequence. Tracking "what stage is this
+          candidate at" is the same question as "which round are they on" —
+          one number, not four separate concepts.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>round_id</th><th>round_number</th><th>round_type</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><code>ROUND-1</code></td><td>null</td><td><code>invitation</code></td><td>Goes through <span class="path">/email/draft</span> → approve → send. Uses <span class="path">interview_call.html</span>. Accept/decline gate — not counted as an interview round.</td></tr>
+              <tr><td><code>ROUND-2-BACKEND</code></td><td>1</td><td><code>assessment</code></td><td>Goes straight out through <span class="path">/email/test-round</span> — no draft/approval step. Uses <span class="path">email_round_test.html</span>.</td></tr>
+              <tr><td><code>ROUND-3</code></td><td>2</td><td><code>next_round</code></td><td>Same draft/approve/send path as the invitation, different subject line.</td></tr>
+              <tr><td><code>ROUND-REJECTED</code></td><td>null</td><td><code>rejection</code></td><td>Draft/approve/send path, LLM-written wording, <span class="path">candidate_rejection.html</span>. Not part of the numbered sequence.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The catalog itself lives in <span class="path">app/tests/modules/email_outreach/testdata.json</span>'s
+          <code>rounds[]</code> array today (see <span class="path">candidate_source.py</span>).
+          Every route that touches a round only ever takes a <code>round_id</code> —
+          never a job description, a duration, a question count. The server looks
+          all of that up itself.
+        </p>
+
+        <div class="callout note">
+          <span class="glyph">Where the round lives on a candidate</span>
+          <p>
+            The <code>email_outreach_emails</code> table has two columns for this:
+            <code>round_id</code> and <code>round_number</code>. Drafting the
+            invite writes them at creation time (round_number stays null until
+            a real interview round starts); a successful
+            <span class="path">/email/test-round</span> send updates them on the
+            candidate's existing row afterward (test-round doesn't create a new
+            row — it emails against whichever row is already
+            <span class="pill sent" style="display:inline-block;vertical-align:middle;">Sent</span>).
+            <span class="path">GET /email/status/{candidate_id}</span> always
+            reflects whichever round is current.
+          </p>
+        </div>
+
+        <div class="callout warn">
+          <span class="glyph">assessment rounds don't go through /email/draft</span>
+          <p>
+            Passing an <code>assessment</code>-typed <code>round_id</code> to
+            <span class="path">POST /email/draft</span> gets rejected with a
+            <code>422</code> — those rounds have no HR-approval step by design,
+            they're emailed directly via <span class="path">POST /email/test-round</span>.
+          </p>
+        </div>
+      </section>
+
+      <section id="files" class="step">
+        <div class="step-head">
+          <h2>What each file does</h2>
+        </div>
+        <p class="step-sub">The folder, and a one-line job description for everything in it.</p>
+
+        <div class="tree">
+<span class="dir">app/main.py</span>                <span class="comment"># starts the background reply-listener thread on boot (see Step 4)</span>
+
+<span class="dir">email_outreach/</span>
+├── models.py              <span class="comment"># the 2 database tables: Email, CandidateResponse</span>
+├── schemas.py             <span class="comment"># shapes of API request/response bodies</span>
+├── api.py                 <span class="comment"># the actual HTTP routes (this is the "front door")</span>
+│
+├── <span class="dir">repositories/</span>
+│   └── email_repository.py   <span class="comment"># the ONLY file allowed to touch the database directly</span>
+│
+└── <span class="dir">services/</span>          <span class="comment"># one file = one job, each does exactly one thing</span>
+    ├── drafter.py             <span class="comment"># writes a draft email for a candidate + round</span>
+    ├── rejection_drafter.py   <span class="comment"># asks an LLM to write rejection wording</span>
+    ├── approval_gate.py       <span class="comment"># approve / reject a draft</span>
+    ├── sender.py              <span class="comment"># actually sends an approved email</span>
+    ├── email_builder.py       <span class="comment"># assembles the final email message object</span>
+    ├── email_template_service.py  <span class="comment"># fills in the HTML template</span>
+    ├── email_backend.py       <span class="comment"># picks which mail provider to use</span>
+    │   ├── gmail_backend.py       <span class="comment"># Gmail API send (used by gmail_pubsub_backend)</span>
+    │   ├── gmail_pubsub_backend.py<span class="comment"># Gmail API send + Gmail push via Pub/Sub</span>
+    │   ├── gmail_auth_service.py  <span class="comment"># the OAuth dance behind both Gmail backends</span>
+    │   └── postal_backend.py      <span class="comment"># Postal HTTP API — send-only, no reply detection</span>
+    │
+    ├── reply_tracker.py       <span class="comment"># finds + processes new replies</span>
+    ├── reply_matcher.py       <span class="comment"># figures out WHICH candidate a reply is from</span>
+    ├── reply_classifier.py    <span class="comment"># decides WHAT the reply means (regex rules)</span>
+    ├── llm_reply_classifier.py<span class="comment"># backup: asks an LLM when the rules aren't sure</span>
+    ├── confirmation_content.py<span class="comment"># wording for the "thanks for replying" email</span>
+    ├── threshold_evaluator.py <span class="comment"># marks silent candidates inactive</span>
+    ├── candidate_source.py    <span class="comment"># candidate/job/hr/round lookups (JSON today)</span>
+    ├── test_round_service.py  <span class="comment"># emails an assessment-round link</span>
+    └── tracking_token_service.py <span class="comment"># generates the tokens used to match replies</span>
+        </div>
+
+        <div class="callout note">
+          <span class="glyph">Why so many small files?</span>
+          <p>
+            Each file answers exactly one question. If you need to change how an
+            email is <em>worded</em>, you're in <span class="path">email_builder.py</span>
+            or a template. If you need to change how a reply is <em>matched</em>
+            to a candidate, you're in <span class="path">reply_matcher.py</span> — and
+            nowhere else. Splitting things this way means changing one behavior
+            never risks breaking an unrelated one.
+          </p>
+        </div>
+      </section>
+
+      <section id="draft" class="step">
+        <div class="step-head">
+          <span class="step-num">Step 1</span>
+          <h2>Drafting an email</h2>
+        </div>
+        <p class="step-sub">Someone (or something) asks: "write an outreach email for this candidate."</p>
+
+        <div class="code-wrap">
+          <div class="code-label">POST /email/draft</div>
+          <pre>{
+  <span class="c1">"candidate_id"</span>: <span class="c2">"CAND-001"</span>,
+  <span class="c1">"round_id"</span>: <span class="c2">"ROUND-1"</span>
+}</pre>
+        </div>
+
+        <p>
+          That's the whole request body. This lands in <span class="path">api.py</span>,
+          which hands it straight to <span class="path">EmailDrafter.create_draft()</span> in
+          <span class="path">drafter.py</span>. Nothing else is caller-supplied —
+          the candidate's email/name, the job/HR details their record points to,
+          and the round's name/type/number are all looked up server-side via
+          <span class="path">candidate_source.py</span>. That function does four
+          things, in order:
+        </p>
+
+        <ol>
+          <li>Checks the database — is there already a pending draft for this
+            candidate? If so, it refuses (you can't have two drafts fighting over
+            one candidate).</li>
+          <li>Looks up <code>round_id</code> in the rounds catalog (see
+            <a href="#rounds">Rounds, not "purpose"</a>) and reads its
+            <code>round_type</code>. An <code>assessment</code> round is refused
+            with a <code>422</code> — those go through <span class="path">POST /email/test-round</span> instead.</li>
+          <li>Picks the right template based on <code>round_type</code>: an
+            <code>invitation</code> and a <code>next_round</code> both use the same
+            HTML template (<span class="path">interview_call.html</span>) with a
+            different subject line, while <code>rejection</code> uses its own
+            template and calls <span class="path">rejection_drafter.py</span> first
+            to get an LLM-written paragraph — see the callout below.</li>
+          <li>Saves the result to the <code>email_outreach_emails</code> table with
+            status <span class="pill draft" style="display:inline-block;vertical-align:middle;">Draft</span>,
+            along with <code>round_id</code>/<code>round_number</code> for tracking.
+            Nothing has been sent. Nobody outside your own database can see this yet.</li>
+        </ol>
+
+        <h3>Where the rejection wording comes from</h3>
+        <p>
+          <span class="path">rejection_drafter.py</span> sends a short prompt to a
+          local LLM (via Ollama) asking for 2–3 sentences: thank the candidate,
+          say the company won't move forward, keep it warm and non-specific. If
+          Ollama is down or errors out, it falls back to a fixed, pre-written
+          paragraph instead — drafting a rejection should never fail just because
+          an AI model happened to be offline.
+        </p>
+
+        <div class="callout note">
+          <span class="glyph">Why is the token missing at this point?</span>
+          <p>
+            Every sent email carries a tracking token embedded in its subject line
+            (like <code>[Ref:a1b2c3d4]</code>), which is how a reply later gets
+            matched back to the right candidate. But a draft might get edited or
+            rejected before it's ever sent — so generating that token now would be
+            wasted work. It's created fresh at the moment of actually sending
+            (Step 3), never before.
+          </p>
+        </div>
+      </section>
+
+      <section id="approve" class="step">
+        <div class="step-head">
+          <span class="step-num">Step 2</span>
+          <h2>HR approves (or rejects) it</h2>
+        </div>
+        <p class="step-sub">The human checkpoint. Nothing reaches a candidate's inbox without this.</p>
+
+        <div class="code-wrap">
+          <div class="code-label">POST /email/approve</div>
+          <pre>{
+  <span class="c1">"candidate_id"</span>: <span class="c2">"CAND-001"</span>,
+  <span class="c1">"approved_by_hr_id"</span>: <span class="c2">"HR-001"</span>,
+  <span class="c1">"edited_body"</span>: <span class="c2">null</span>
+}</pre>
+        </div>
+
+        <p>
+          Handled by <span class="path">approval_gate.py</span>. It looks up the
+          pending draft for that candidate; if it's not sitting in
+          <span class="pill draft" style="display:inline-block;vertical-align:middle;">Draft</span> status,
+          it refuses outright — you can't approve something that was already sent,
+          or that doesn't exist.
+        </p>
+        <p>
+          <code>approved_by_hr_id</code> is looked up against the same HR catalog
+          <span class="path">candidate_source.py</span> uses everywhere else —
+          the resolved name (not the raw id) is what actually gets stored in
+          <code>approved_by</code>, so status/history views stay human-readable.
+          An unknown <code>hr_id</code> is rejected with a <code>404</code>.
+        </p>
+        <p>
+          If HR wants to change the wording before approving, they pass the new
+          HTML in <code>edited_body</code> and that replaces the drafted text
+          entirely — whatever HR approves is exactly what goes out later, with no
+          re-generation in between. The row flips to
+          <span class="pill approved" style="display:inline-block;vertical-align:middle;">Approved</span>
+          and records who approved it and when.
+        </p>
+        <p>
+          Rejecting works the same way through <code>POST /email/reject</code> — the
+          draft moves to <span class="pill rejected" style="display:inline-block;vertical-align:middle;">Rejected</span>
+          and is permanently done; it can never be sent.
+        </p>
+      </section>
+
+      <section id="send" class="step">
+        <div class="step-head">
+          <span class="step-num">Step 3</span>
+          <h2>Sending it</h2>
+        </div>
+        <p class="step-sub">The moment the email actually leaves the building.</p>
+
+        <div class="code-wrap">
+          <div class="code-label">POST /email/send</div>
+          <pre>{ <span class="c1">"candidate_id"</span>: <span class="c2">"CAND-001"</span> }</pre>
+        </div>
+
+        <p>
+          This calls <span class="path">EmailSenderService.send_approved_draft()</span>
+          in <span class="path">sender.py</span>, which is the only place these five
+          things happen together:
+        </p>
+
+        <ol>
+          <li>Confirms the draft is actually <span class="pill approved" style="display:inline-block;vertical-align:middle;">Approved</span> — refuses otherwise.</li>
+          <li>Generates the real tracking token now, and appends it to the subject:
+            <code>"Interview Invitation [Ref:a1b2c3d4]"</code>.</li>
+          <li>Wraps the approved body into a real email message via
+            <span class="path">email_builder.py</span> — this also sets a unique
+            <code>Message-ID</code> header and a "plus-tagged" reply address like
+            <code>yourinbox+CAND-001@gmail.com</code>, both of which matter later.</li>
+          <li>Hands that message to whichever backend is configured
+            (<span class="path">email_backend.py</span> picks one — see the box below)
+            and asks it to send.</li>
+          <li>On success, records the send time and computes a
+            <strong>response deadline</strong> (send time + the configured
+            threshold, default 72 hours), then flips the row to
+            <span class="pill sent" style="display:inline-block;vertical-align:middle;">Sent</span>.</li>
+        </ol>
+
+        <h3>Two interchangeable ways to actually send</h3>
+        <p>
+          <span class="path">email_backend.py</span> is a single switch controlled
+          by one setting (<code>email_backend</code>). Every option below
+          exposes the same interface, so nothing else in the codebase needs to
+          know or care which one is active. IMAP/SMTP and Gmail-API polling used
+          to be options here too — both were removed once the Pub/Sub push
+          listener covered the same ground with no polling delay (see Step 4).
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Backend</th><th>Sends via</th><th>Reads replies?</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>gmail_pubsub</code></td><td>Gmail API</td><td>Yes — pushed instantly, no polling delay. The default.</td></tr>
+              <tr><td><code>postal</code></td><td>Postal's HTTP API</td><td><strong>No</strong> — send-only, pair it with the webhook (Step 4) instead</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="reply" class="step">
+        <div class="step-head">
+          <span class="step-num">Step 4</span>
+          <h2>Reading a candidate's reply</h2>
+        </div>
+        <p class="step-sub">Two doors in, one hallway once you're inside.</p>
+
+        <p>
+          A reply can arrive two different ways, but both end up calling the exact
+          same function — <span class="path">ReplyTrackerService.process_reply()</span>
+          in <span class="path">reply_tracker.py</span> — so the actual handling
+          logic is written once, not twice.
+        </p>
+
+        <div class="flow">
+          <span class="flow-node">Background listener (auto-started)</span>
+          <span class="flow-arrow">↘</span>
+        </div>
+        <div class="flow" style="margin-top:-14px;">
+          <span class="flow-node">POST /email/webhook/reply</span>
+          <span class="flow-arrow">↗</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node state">process_reply()</span>
+        </div>
+
+        <h3>Door 1 — the background listener, started for you</h3>
+        <p>
+          <span class="path">app/main.py</span> starts a daemon thread the moment
+          the FastAPI server boots — nothing to run separately, no CLI command to
+          remember. That thread calls
+          <span class="path">ReplyTrackerService.monitor_forever()</span>, which
+          registers a Gmail <code>watch()</code> and opens a live Pub/Sub streaming
+          pull: Gmail pushes a notification the instant the inbox changes, a
+          background thread resolves it to the actual new message, and it's handed
+          to <code>process_reply()</code> within seconds — no fixed polling
+          interval to wait out. The watch registration expires after 7 days
+          (Gmail's own limit), so the loop quietly re-registers it once a day on
+          its own.
+        </p>
+        <p>
+          Whatever backend the reply came through, each candidate message gets
+          passed to <span class="path">reply_matcher.py</span>, which tries three
+          signals, <em>in order</em>, to figure out which candidate it's from:
+        </p>
+        <ol>
+          <li><strong>Message threading</strong> — does this email's "In-Reply-To"
+            header point at the Message-ID we sent? Most reliable, since every
+            mail client sets this automatically.</li>
+          <li><strong>The plus-tag</strong> — was it sent to
+            <code>yourinbox+CAND-001@...</code>? Survives even if threading headers
+            get stripped somewhere along the way.</li>
+          <li><strong>The subject token</strong> — does the subject still contain
+            <code>[Ref:a1b2c3d4]</code>? Last resort, since a forwarded original
+            invite could carry the same token without being a real reply.</li>
+        </ol>
+
+        <div class="callout note">
+          <span class="glyph">Postal has no equivalent</span>
+          <p>
+            The Postal backend has no message-fetch API at all — if
+            <code>email_backend</code> is set to <code>postal</code>, this thread
+            still runs (harmless, quietly idle every 15s) but never finds a match.
+            The webhook door below is Postal's only real reply path.
+          </p>
+        </div>
+
+        <h3>Door 2 — the webhook</h3>
+        <p>
+          <code>POST /email/webhook/reply</code> exists for a real mail provider
+          that can push replies to us directly, instead of us having to go check.
+          It expects the token, subject, and body already figured out — it skips
+          straight to <code>process_reply()</code>. It's also the fastest way to
+          test the classification path by hand, without needing a live inbox at
+          all — POST a fake reply body straight at it.
+        </p>
+
+        <h3>What process_reply() actually does</h3>
+        <ol>
+          <li>Saves the reply text to <code>email_outreach_candidate_responses</code>.</li>
+          <li>Runs it through <span class="path">reply_classifier.py</span> — a list
+            of regex patterns catches common phrasing first ("not interested",
+            "sounds good", "count me in"...).</li>
+          <li>If nothing matches, falls through to
+            <span class="path">llm_reply_classifier.py</span> (Ollama,
+            <code>llama3.2:3b</code> by default), which asks the LLM to pick one of
+            <code>INTERESTED</code> / <code>NOT_INTERESTED</code> / <code>OTHER</code>.
+            The prompt explicitly tells it to look past typos and casual phrasing
+            ("Intrested", "yess pls") rather than bailing to <code>OTHER</code> —
+            a reply doesn't need to be spelled correctly to be understood.</li>
+          <li>Sends an automatic "thanks for your response" confirmation email
+            back, using wording from <span class="path">confirmation_content.py</span>.</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="glyph">The LLM step needs a real model pulled</span>
+          <p>
+            <code>llm_reply_classifier.py</code> talks to whatever Ollama instance
+            <code>OLLAMA_BASE_URL</code> points at, using <code>LLM_MODEL</code>. If
+            that model was never <code>ollama pull</code>'d, every ambiguous reply
+            silently falls through to <code>needs_review</code> — no confirmation
+            goes out, and nothing looks broken unless you check the logs for a
+            <code>model not found</code> error. Confirm with
+            <code>docker exec &lt;ollama-container&gt; ollama list</code>.
+          </p>
+        </div>
+
+        <div class="callout warn">
+          <span class="glyph">Note</span>
+          <p>
+            Before any of that classification runs, the reply text is trimmed to
+            cut off quoted/forwarded content — otherwise a reply that quotes our
+            own invite underneath it could accidentally match on a word from our
+            <em>own</em> email (like the word "decline" in a button label) instead
+            of anything the candidate actually wrote.
+          </p>
+        </div>
+      </section>
+
+      <section id="threshold" class="step">
+        <div class="step-head">
+          <span class="step-num">Step 5</span>
+          <h2>Auto-marking silent candidates inactive</h2>
+        </div>
+        <p class="step-sub">The job nobody has to remember to run by hand.</p>
+
+        <p>
+          Recall from Step 3 that every sent email gets a
+          <strong>response deadline</strong> stamped on it. Separately,
+          <span class="path">threshold_evaluator.py</span> can be asked at any
+          time: "which candidates are past their deadline with no reply logged
+          at all?" It marks every one it finds as
+          <span class="pill inactive" style="display:inline-block;vertical-align:middle;">Inactive</span>.
+        </p>
+
+        <p>One route, callable from anywhere that can make an HTTP request:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Trigger</th><th>How</th></tr></thead>
+            <tbody>
+              <tr><td>On demand / from a dashboard</td><td><span class="method post">POST</span> <code>/email/threshold/run</code></td></tr>
+              <tr><td>Scheduled (cron)</td><td>A cron job (or any scheduler) hits the same route on a timer</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="glyph">Not automatic yet</span>
+          <p>
+            Nothing in this repo currently calls this route on a timer — there's
+            no scheduler set up. Whoever owns deployment needs to wire it into
+            whatever cron/scheduler the project ends up using. (There used to be
+            a standalone CLI command for this too — it was removed once every
+            command it offered had a full HTTP equivalent with no other caller.)
+          </p>
+        </div>
+      </section>
+
+      <section id="status" class="step">
+        <div class="step-head">
+          <span class="step-num">Step 6</span>
+          <h2>Checking on a candidate</h2>
+        </div>
+        <p class="step-sub">Two read-only views into where things stand.</p>
+
+        <p>
+          <code>GET /email/status/{candidate_id}</code> gives the current snapshot:
+          what status the email is in right now, which <code>round_id</code>/
+          <code>round_number</code> they're on (see
+          <a href="#rounds">Rounds, not "purpose"</a>), whether they've replied,
+          and what that reply was classified as.
+        </p>
+        <p>
+          <code>GET /email/status/{candidate_id}/history</code> gives the whole
+          timeline instead — the outreach email itself, plus every reply logged
+          against it, oldest first. Useful for a dashboard that wants to show
+          "here's everything that's happened with this person," not just where
+          things stand today.
+        </p>
+      </section>
+
+      <section id="api-table" class="step">
+        <div class="step-head">
+          <h2>Full API reference</h2>
+        </div>
+        <p class="step-sub">Every route this module exposes, in one place.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Route</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><span class="method post">POST</span> <code>/email/draft</code></td><td>Create a pending draft — <code>candidate_id</code> + <code>round_id</code> only</td></tr>
+              <tr><td><span class="method post">POST</span> <code>/email/approve</code></td><td>Approve a draft (<code>approved_by_hr_id</code>), optionally editing the body first</td></tr>
+              <tr><td><span class="method post">POST</span> <code>/email/reject</code></td><td>Reject a draft permanently</td></tr>
+              <tr><td><span class="method post">POST</span> <code>/email/send</code></td><td>Send a previously approved draft</td></tr>
+              <tr><td><span class="method get">GET</span> <code>/email/status/{candidate_id}</code></td><td>Current status snapshot, including round_id/round_number</td></tr>
+              <tr><td><span class="method get">GET</span> <code>/email/status/{candidate_id}/history</code></td><td>Full timeline of events</td></tr>
+              <tr><td><span class="method post">POST</span> <code>/email/threshold/run</code></td><td>Run the auto-inactive job now</td></tr>
+              <tr><td><span class="method post">POST</span> <code>/email/webhook/reply</code></td><td>Push-based reply intake</td></tr>
+              <tr><td><span class="method post">POST</span> <code>/email/test-round</code></td><td>Email an assessment-round link — <code>candidate_id</code> + <code>round_id</code> + <code>url</code></td></tr>
+              <tr><td><span class="method get">GET</span> <code>/email/ping</code></td><td>Health check</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Full interactive docs (try requests right in the browser) are always
+          available at <code>/docs</code> once the server is running.
+        </p>
+      </section>
+
+      <section id="glossary" class="step">
+        <div class="step-head">
+          <h2>Glossary</h2>
+        </div>
+        <p class="step-sub">Terms this doc uses a lot, defined once.</p>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <span class="pill draft">token</span>
+            <p>An 8-character code embedded in a sent email's subject, used as a last-resort way to match a reply back to a candidate.</p>
+          </div>
+          <div class="status-card">
+            <span class="pill draft">candidate_id</span>
+            <p>A public identifier for a candidate across API calls — a UUID once really sent, but any string the configured candidate source can resolve (e.g. <code>CAND-001</code> in testdata.json). Separate from the internal token.</p>
+          </div>
+          <div class="status-card">
+            <span class="pill draft">round_id / round_number</span>
+            <p>Which stage of the process a candidate is on — invite, assessment, next round, or rejection — looked up from one shared rounds catalog. See <a href="#rounds">Rounds, not "purpose"</a>.</p>
+          </div>
+          <div class="status-card">
+            <span class="pill draft">backend</span>
+            <p>Whichever service actually transmits the email — Gmail (via Pub/Sub) or Postal. Swappable without touching any other code.</p>
+          </div>
+          <div class="status-card">
+            <span class="pill draft">repository</span>
+            <p>The one file per module allowed to run database queries. Everything else goes through it instead of touching SQL directly.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="doc-footer">
+    <span>email_outreach module — internal reference</span>
+    <span>Source: backend/app/modules/email_outreach/</span>
+  </div>
+
+</div>
+</body>
+</html>

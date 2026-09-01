@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Opportunity</title>
+    <link rel="stylesheet" href="interview_invitation.css">
+</head>
+
+<body>
+
+    <table class="email-wrapper" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td class="email-wrapper-cell">
+
+                <!-- Main Email Card -->
+                <table class="email-card" cellpadding="0" cellspacing="0" border="0">
+
+                    <!-- =========================
+                         HEADER
+                    ========================== -->
+                    <tr>
+                        <td class="email-header">
+
+                            <h1 class="company-name">
+                                {{company_name}}
+                            </h1>
+
+                            <p class="header-subtitle">
+                                Career Opportunity
+                            </p>
+
+                        </td>
+                    </tr>
+
+
+                    <!-- =========================
+                         MAIN CONTENT
+                    ========================== -->
+                    <tr>
+                        <td class="email-content">
+
+                            <!-- Greeting -->
+                            <p class="greeting">
+                                Hi <strong>{{candidate_name}}</strong>,
+                            </p>
+
+
+                            <!-- Introduction -->
+                            <p class="paragraph">
+
+                                Thank you for your interest in
+                                <strong>{{company_name}}</strong>.
+
+                                We reviewed your profile and believe your experience
+                                and background may be a good fit for an opportunity
+                                with our team.
+
+                            </p>
+
+
+                            <p class="paragraph">
+
+                                We would like to invite you to continue with our
+                                recruitment process for the position described below.
+
+                                Before proceeding, we would like to know if you are
+                                interested in exploring this opportunity.
+
+                            </p>
+
+
+                            <!-- =========================
+                                 JOB INFORMATION
+                            ========================== -->
+                            <table class="job-card"
+                                   cellpadding="0"
+                                   cellspacing="0"
+                                   border="0">
+
+                                <tr>
+                                    <td class="job-card-content">
+
+                                        <!-- Position -->
+                                        <p class="section-label">
+                                            POSITION
+                                        </p>
+
+                                        <p class="job-title">
+                                            {{job_role}}
+                                        </p>
+
+
+                                        <!-- Job Description -->
+                                        <p class="section-label">
+                                            ABOUT THE ROLE
+                                        </p>
+
+                                        <p class="job-description">
+                                            {{job_description}}
+                                        </p>
+
+
+                                        <!-- Experience -->
+                                        <p class="section-label">
+                                            EXPERIENCE REQUIRED
+                                        </p>
+
+                                        <p class="job-detail">
+                                            {{experience_required}}
+                                        </p>
+
+
+                                        <!-- Skills -->
+                                        <p class="section-label">
+                                            KEY SKILLS
+                                        </p>
+
+                                        <p class="job-detail">
+                                            {{required_skills}}
+                                        </p>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+
+                            <!-- =========================
+                                 RESPONSE SECTION
+                            ========================== -->
+
+                            <h2 class="response-title">
+                                Would you like to proceed?
+                            </h2>
+
+
+                            <p class="paragraph">
+
+                                If you are interested in this opportunity, please
+                                accept the invitation below.
+
+                                If you are not interested at this time, you can
+                                decline the invitation.
+
+                            </p>
+
+
+                            <!-- =========================
+                                 ACCEPT BUTTON
+                            ========================== -->
+
+                            <table class="button-table"
+                                   cellpadding="0"
+                                   cellspacing="0"
+                                   border="0">
+
+                                <tr>
+                                    <td class="button-cell">
+
+                                        <a href="{{accept_link}}"
+                                           class="accept-button">
+
+                                            Accept Invitation
+
+                                        </a>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+
+                            <!-- =========================
+                                 DECLINE BUTTON
+                            ========================== -->
+
+                            <table class="button-table"
+                                   cellpadding="0"
+                                   cellspacing="0"
+                                   border="0">
+
+                                <tr>
+                                    <td class="button-cell">
+
+                                        <a href="{{reject_link}}"
+                                           class="reject-button">
+
+                                            Decline Invitation
+
+                                        </a>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+
+                            <!-- =========================
+                                 REPLY BY EMAIL
+                            ========================== -->
+
+                            <table class="reply-card"
+                                   cellpadding="0"
+                                   cellspacing="0"
+                                   border="0">
+
+                                <tr>
+                                    <td class="reply-card-content">
+
+                                        <p class="reply-title">
+                                            Prefer to respond by email?
+                                        </p>
+
+                                        <p class="reply-text">
+
+                                            Simply reply to this email with your
+                                            response.
+
+                                            You can also use this option if you have
+                                            questions about the position or the
+                                            recruitment process.
+
+                                        </p>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+
+                            <!-- =========================
+                                 RESPONSE DEADLINE
+                            ========================== -->
+
+                            <div class="deadline-section">
+
+                                <p class="deadline-text">
+
+                                    Please respond by
+                                    <strong>
+                                        {{response_deadline}}
+                                    </strong>.
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 CONTACT
+                            ========================== -->
+
+                            <p class="contact-text">
+
+                                If you have any questions about this opportunity,
+                                please contact our HR team at
+
+                                <a href="mailto:{{hr_email}}"
+                                   class="email-link">
+
+                                    {{hr_email}}
+
+                                </a>.
+
+                            </p>
+
+
+                            <!-- =========================
+                                 SIGNATURE
+                            ========================== -->
+
+                            <p class="signature">
+
+                                Best regards,<br>
+
+                                <strong>{{hr_name}}</strong><br>
+
+                                {{hr_designation}}<br>
+
+                                {{company_name}}
+
+                            </p>
+
+                        </td>
+                    </tr>
+
+
+                    <!-- =========================
+                         FOOTER
+                    ========================== -->
+
+                    <tr>
+                        <td class="email-footer">
+
+                            <p class="footer-text">
+                                © {{year}} {{company_name}}. All rights reserved.
+                            </p>
+
+                            <p class="footer-text">
+                                This email was sent as part of our recruitment process.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
