@@ -10,7 +10,6 @@ __pycache__/
 venv/
 env/
 .uv/
-uv.lock
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
@@ -18,7 +17,6 @@ uv.lock
 .coverage
 .coverage.*
 htmlcov/
-uv.lock
 audio_files
 kokoro-v1.0.int8.onnx
 voices-v1.0.bin
