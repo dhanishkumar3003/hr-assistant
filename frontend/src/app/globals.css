@@ -18,6 +18,15 @@
   --color-error-bg: #FEE2E2;
   --color-error-text: #991B1B;
 
+  --color-success-bg: #DCFCE7;
+  --color-success-text: #166534;
+
+  --color-warning-bg: #FEF3C7;
+  --color-warning-text: #92400E;
+
+  --color-info-bg: #DBEAFE;
+  --color-info-text: #1D4ED8;
+
   --radius-button: 12px;
   --radius-input: 12px;
   --radius-card: 16px;
