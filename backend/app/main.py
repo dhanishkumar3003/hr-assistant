@@ -16,6 +16,7 @@ logging.basicConfig(
 
 from app.db.session import SessionLocal
 from app.modules.resume_ingestion.api import router as resume_ingestion_router
+from app.modules.resume_ingestion.api import candidates_router
 from app.modules.hr_assistant.api import router as hr_assistant_router
 from app.modules.email_outreach.api import router as email_outreach_router
 from app.modules.email_outreach.repositories.email_repository import EmailRepository
@@ -82,6 +83,7 @@ app.add_middleware(
 )
 
 app.include_router(resume_ingestion_router, prefix="/resumes", tags=["Resume Ingestion"])
+app.include_router(candidates_router, prefix="/candidates", tags=["Resume Ingestion"])
 app.include_router(hr_assistant_router, prefix="/chat", tags=["HR Assistant"])
 app.include_router(email_outreach_router, prefix="/email", tags=["Email Outreach"])
 app.include_router(voice_interview_router, prefix="/interview", tags=["Voice Interview"])

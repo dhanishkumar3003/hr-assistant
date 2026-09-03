@@ -123,42 +123,86 @@ class JsonCandidateSource:
 
 class ApiCandidateSource:
     """
-    Reads candidate/job/hr data from the recruitment API.
+    Reads candidate data from Module 1's real `candidates` table
+    (backend/app/modules/resume_ingestion). job_id/hr_id/round_id have no
+    backing tables of their own yet - those stay on the JSON catalog
+    (app/tests/modules/email_outreach/testdata.json's jobs[]/hrs[]/rounds[]),
+    same as JsonCandidateSource, via the _catalog fallback below.
 
-    Integration point for the teammate building that API - implement
-    these to call it and return the same dict shapes as
-    JsonCandidateSource so services/drafter.py doesn't need to change.
+    candidate_id here is Module 1's integer candidate_id, passed around
+    Module 3 as a string (see models.Email.candidate_id: String(36)).
     """
 
+    def __init__(self):
+        self._catalog = JsonCandidateSource()
+
+    def _session(self):
+        from app.db.session import SessionLocal
+        return SessionLocal()
+
     def fetch_candidate(self, candidate_id: str) -> dict:
-        raise NotImplementedError(
-            "ApiCandidateSource is not implemented yet - "
-            "set candidate_source=json until the API is ready."
+        """
+        Look up a candidate by Module 1's integer candidate_id.
+
+        Returns:
+            dict: candidate record shaped like JsonCandidateSource's -
+                "name", "email", plus job_id/hr_id when the candidate
+                carries them (POC: not yet on Module 1's schema, so
+                these are absent and the caller falls back to no job/HR
+                context - see build_template_context below).
+
+        Raises:
+            CandidateNotFoundError: no candidate with this candidate_id,
+                or candidate_id isn't a valid integer.
+        """
+        from app.modules.resume_ingestion.repositories.candidate_repository import (
+            CandidateRepository,
         )
+
+        try:
+            numeric_id = int(candidate_id)
+        except (TypeError, ValueError):
+            raise CandidateNotFoundError(f"Unknown candidate_id: {candidate_id}")
+
+        with self._session() as db:
+            candidate = CandidateRepository(db).get_by_id(numeric_id)
+            if candidate is None:
+                raise CandidateNotFoundError(f"Unknown candidate_id: {candidate_id}")
+            return {
+                "candidate_id": str(candidate.candidate_id),
+                "name": candidate.name,
+                "email": candidate.email,
+                "phone": candidate.phone,
+                "location": candidate.current_location,
+                "current_designation": candidate.current_job_title,
+                "current_company": candidate.current_company,
+                "skills": candidate.skills,
+                "experience": candidate.experience_years,
+                # job_id/hr_id: not yet columns on candidates - Module 1's
+                # schema has no concept of "which req/recruiter" a
+                # candidate is tied to. build_template_context handles
+                # their absence with empty job/hr context.
+                "job_id": None,
+                "hr_id": None,
+            }
 
     def fetch_job(self, job_id: str) -> dict:
-        raise NotImplementedError(
-            "ApiCandidateSource is not implemented yet - "
-            "set candidate_source=json until the API is ready."
-        )
+        return self._catalog.fetch_job(job_id)
 
     def fetch_hr(self, hr_id: str) -> dict:
-        raise NotImplementedError(
-            "ApiCandidateSource is not implemented yet - "
-            "set candidate_source=json until the API is ready."
-        )
+        return self._catalog.fetch_hr(hr_id)
 
     def fetch_round(self, round_id: str) -> dict:
-        raise NotImplementedError(
-            "ApiCandidateSource is not implemented yet - "
-            "set candidate_source=json until the API is ready."
-        )
+        return self._catalog.fetch_round(round_id)
 
     def build_template_context(self, candidate_id: str) -> dict:
-        raise NotImplementedError(
-            "ApiCandidateSource is not implemented yet - "
-            "set candidate_source=json until the API is ready."
-        )
+        """
+        Resolve a candidate_id into template context, same shape as
+        JsonCandidateSource.build_template_context. job/hr fields come
+        back empty since real candidates carry no job_id/hr_id yet.
+        """
+        candidate = self.fetch_candidate(candidate_id)
+        return self._catalog._context_for(candidate)
 
 
 def get_candidate_source():

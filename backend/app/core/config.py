@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     candidate_token_expiry_minutes: int = 4320
 
     llm_provider: str = "ollama"
-    llm_model: str = "llama3.2:3b"
+    llm_model: str = "gpt-oss:120b-cloud"
     ollama_base_url: str = "http://localhost:11434"
 
     embedding_provider: str = "ollama"
